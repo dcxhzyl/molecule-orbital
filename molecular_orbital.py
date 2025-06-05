@@ -9,10 +9,13 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit.Chem import Draw
 
-def show_atom_number(mol, label):
+
+# ------------------------Input----------®--------------#
+def DEBUG_show_atom_number(mol, label):
     for atom in mol.GetAtoms():
-        atom.SetProp(label, str(atom.GetIdx()+1))
+        atom.SetProp(label, str(atom.GetIdx()))
     return mol
+
 
 target_mol_SMILE = input("")
 target_mol = Chem.MolFromSmiles(target_mol_SMILE)
@@ -23,5 +26,16 @@ AllChem.MMFFOptimizeMolecule(target_mol)
 
 conf = target_mol.GetConformer()
 pos = conf.GetPositions()
-show_atom_number(target_mol, 'atomNote')
-Draw.MolToFile(target_mol,'testGraph.png',size=(1800,600))
+
+DEBUG_show_atom_number(target_mol, 'atomNote')
+Draw.MolToFile(target_mol, 'testGraph.png', size=(1800, 600))
+
+a=target_mol.GetBonds()
+for i in a:
+    print(i.GetBeginAtom().GetSmarts(),i.GetBeginAtomIdx(),i.GetBondType())
+
+# ------------------------Kohn Sham equations calculation------------------------#
+
+
+# ------------------------plotting------------------------#
+
